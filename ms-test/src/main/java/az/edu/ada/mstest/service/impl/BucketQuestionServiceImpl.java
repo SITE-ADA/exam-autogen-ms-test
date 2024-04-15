@@ -34,7 +34,7 @@ public class BucketQuestionServiceImpl implements BucketQuestionService {
 
     @Override
     public BucketQuestion save(BucketQuestion bucketQuestion) {
-        Long questionId = bucketQuestion.getQuestionId();
+        Long questionId = bucketQuestion.getId().getQuestionId();
         try {
             // Attempt to fetch the question from ms-questions to verify its existence
             QuestionDTO question = questionClient.getQuestionById(questionId);

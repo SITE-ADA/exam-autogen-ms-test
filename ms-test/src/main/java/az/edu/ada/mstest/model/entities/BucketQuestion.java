@@ -15,15 +15,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "bucket-question")
 public class BucketQuestion {
-
     @EmbeddedId
     private BucketQuestionId id;
-
     @MapsId("questionBucketId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_bucket_id")
     private QuestionBucket questionBucket;
-
-    private Long questionId;
 }
 
