@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/tests/question-booklets")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class QuestionBookletController {
 
     private final QuestionBookletService service;
