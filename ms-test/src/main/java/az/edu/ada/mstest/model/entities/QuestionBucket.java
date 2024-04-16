@@ -23,6 +23,7 @@ public class QuestionBucket {
     @JoinColumn(name = "test_id")
     private Test test;
 
+    @Column(name = "question_order")
     private Integer order;
     private Integer noTotalQuestions;
     private Integer nbSelectedQuestions;

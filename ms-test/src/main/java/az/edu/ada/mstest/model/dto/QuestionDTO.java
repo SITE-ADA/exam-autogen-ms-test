@@ -1,5 +1,5 @@
 package az.edu.ada.mstest.model.dto;
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
