@@ -1,4 +1,4 @@
-package az.edu.ada.msgeneratedTest.controller;
+package az.edu.ada.mstest.controller;
 
 import az.edu.ada.mstest.model.entities.GeneratedTest;
 import az.edu.ada.mstest.service.GeneratedTestService;
