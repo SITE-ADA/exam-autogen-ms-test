@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Valid
 @Builder
-@Table(name = "generated-test")
+@Table(name = "generated_test")
 public class GeneratedTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,6 @@ public class GeneratedTest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
     private Test test;
-    private Integer nbVariants;
-    private Integer nbExaminees;
+    private Long nbVariants;
+    private Long nbExaminees;
 }

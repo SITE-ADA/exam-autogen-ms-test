@@ -1,7 +1,7 @@
 package az.edu.ada.mstest.controller;
 
 import az.edu.ada.mstest.model.entities.BucketQuestion;
-import az.edu.ada.mstest.model.entities.BucketQuestionId;
+import az.edu.ada.mstest.model.request.BucketQuestionRequest;
 import az.edu.ada.mstest.service.BucketQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +20,20 @@ public class BucketQuestionController {
         this.bucketQuestionService = bucketQuestionService;
     }
 
-    @GetMapping("/{bucketId}")
-    public ResponseEntity<List<BucketQuestion>> getQuestionsForBucket(@PathVariable Long bucketId) {
-        List<BucketQuestion> bucketQuestions = bucketQuestionService.findAllByQuestionBucketId(bucketId);
+    @GetMapping
+    public ResponseEntity<List<BucketQuestion>> getAll() {
+        List<BucketQuestion> bucketQuestions = bucketQuestionService.findAll();
         return ResponseEntity.ok(bucketQuestions);
     }
 
     @PostMapping
-    public ResponseEntity<BucketQuestion> addQuestionToBucket(@RequestBody BucketQuestion bucketQuestion) {
-        BucketQuestion savedBucketQuestion = bucketQuestionService.save(bucketQuestion);
+    public ResponseEntity<BucketQuestion> save(@RequestBody BucketQuestionRequest bucketQuestionRequest) {
+        BucketQuestion savedBucketQuestion = bucketQuestionService.save(bucketQuestionRequest);
         return ResponseEntity.ok(savedBucketQuestion);
     }
 
-    @DeleteMapping("/{bucketId}/{questionId}")
-    public ResponseEntity<Void> removeQuestionFromBucket(@PathVariable Long bucketId, @PathVariable Long questionId) {
-        BucketQuestionId id = new BucketQuestionId(bucketId, questionId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBucket(@PathVariable Long id) {
         bucketQuestionService.delete(id);
         return ResponseEntity.ok().build();
     }

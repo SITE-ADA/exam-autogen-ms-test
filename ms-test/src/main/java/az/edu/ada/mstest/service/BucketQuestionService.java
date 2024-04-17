@@ -1,14 +1,12 @@
 package az.edu.ada.mstest.service;
 
-import az.edu.ada.mstest.model.dto.QuestionDTO;
 import az.edu.ada.mstest.model.entities.BucketQuestion;
-import az.edu.ada.mstest.model.entities.BucketQuestionId;
+import az.edu.ada.mstest.model.request.BucketQuestionRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BucketQuestionService {
-    List<BucketQuestion> findAllByQuestionBucketId(Long questionBucketId);
-    BucketQuestion save(BucketQuestion bucketQuestion);
-    void delete(BucketQuestionId id);
+    List<BucketQuestion> findAll();
+    BucketQuestion save(BucketQuestionRequest bucketQuestionRequest);
+    void delete(Long id);
 }

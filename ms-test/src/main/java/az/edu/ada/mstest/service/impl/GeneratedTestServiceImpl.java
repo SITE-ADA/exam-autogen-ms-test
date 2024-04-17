@@ -1,7 +1,9 @@
 package az.edu.ada.mstest.service.impl;
 
 import az.edu.ada.mstest.model.entities.GeneratedTest;
+import az.edu.ada.mstest.model.request.GeneratedTestRequest;
 import az.edu.ada.mstest.repository.GeneratedTestRepository;
+import az.edu.ada.mstest.repository.TestRepository;
 import az.edu.ada.mstest.service.GeneratedTestService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.List;
 @Service
 public class GeneratedTestServiceImpl implements GeneratedTestService {
     private final GeneratedTestRepository generatedTestRepository;
+    private final TestRepository testRepository;
 
     @Autowired
-    public GeneratedTestServiceImpl(GeneratedTestRepository generatedTestRepository) {
+    public GeneratedTestServiceImpl(GeneratedTestRepository generatedTestRepository, TestRepository testRepository) {
         this.generatedTestRepository = generatedTestRepository;
+        this.testRepository = testRepository;
     }
 
     @Override
@@ -30,7 +34,14 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
     }
 
     @Override
-    public GeneratedTest saveGeneratedTest(GeneratedTest generatedTest) {
+    public GeneratedTest saveGeneratedTest(GeneratedTestRequest generatedTestRequest) {
+
+        var generatedTest = GeneratedTest.builder()
+                .test(testRepository.findById(generatedTestRequest.getTestId()).get())
+                .nbVariants(generatedTestRequest.getNbVariants())
+                .nbExaminees(generatedTestRequest.getNbExaminees())
+                .build();
+
         return generatedTestRepository.save(generatedTest);
     }
 

@@ -1,6 +1,7 @@
 package az.edu.ada.mstest.controller;
 
 import az.edu.ada.mstest.model.entities.QuestionBucket;
+import az.edu.ada.mstest.model.request.QuestionBucketRequest;
 import az.edu.ada.mstest.service.QuestionBucketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ public class QuestionBucketController {
     }
 
     @PostMapping
-    public ResponseEntity<QuestionBucket> createQuestionBucket(@RequestBody QuestionBucket questionBucket) {
-        QuestionBucket savedQuestionBucket = questionBucketService.saveQuestionBucket(questionBucket);
+    public ResponseEntity<QuestionBucket> createQuestionBucket(@RequestBody QuestionBucketRequest questionBucketRequest) {
+        QuestionBucket savedQuestionBucket = questionBucketService.saveQuestionBucket(questionBucketRequest);
         return new ResponseEntity<>(savedQuestionBucket, HttpStatus.CREATED);
     }
 

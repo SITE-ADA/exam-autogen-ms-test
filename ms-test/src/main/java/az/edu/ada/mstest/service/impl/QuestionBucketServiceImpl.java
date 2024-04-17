@@ -1,7 +1,9 @@
 package az.edu.ada.mstest.service.impl;
 
 import az.edu.ada.mstest.model.entities.QuestionBucket;
+import az.edu.ada.mstest.model.request.QuestionBucketRequest;
 import az.edu.ada.mstest.repository.QuestionBucketRepository;
+import az.edu.ada.mstest.repository.TestRepository;
 import az.edu.ada.mstest.service.QuestionBucketService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.List;
 @Service
 public class QuestionBucketServiceImpl implements QuestionBucketService {
     private final QuestionBucketRepository questionBucketRepository;
+    private final TestRepository testRepository;
 
     @Autowired
-    public QuestionBucketServiceImpl(QuestionBucketRepository questionBucketRepository) {
+    public QuestionBucketServiceImpl(QuestionBucketRepository questionBucketRepository, TestRepository testRepository) {
         this.questionBucketRepository = questionBucketRepository;
+        this.testRepository = testRepository;
     }
 
     @Override
@@ -30,7 +34,15 @@ public class QuestionBucketServiceImpl implements QuestionBucketService {
     }
 
     @Override
-    public QuestionBucket saveQuestionBucket(QuestionBucket questionBucket) {
+    public QuestionBucket saveQuestionBucket(QuestionBucketRequest questionBucketRequest) {
+        var questionBucket = QuestionBucket.builder()
+                .test(testRepository.findById(questionBucketRequest.getTestId()).get())
+                .order(questionBucketRequest.getOrder())
+                .noTotalQuestions(questionBucketRequest.getNoTotalQuestions())
+                .nbSelectedQuestions(questionBucketRequest.getNbSelectedQuestions())
+                .maximumPoints(questionBucketRequest.getMaximumPoints())
+                .build();
+
         return questionBucketRepository.save(questionBucket);
     }
 

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Valid
 @Builder
-@Table(name = "question-booklet")
+@Table(name = "question_booklet")
 public class QuestionBooklet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

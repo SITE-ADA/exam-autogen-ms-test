@@ -2,6 +2,7 @@ package az.edu.ada.mstest.model.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +14,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Valid
 @Builder
-@Table(name = "bucket-question")
+@Table(name = "bucket_question")
 public class BucketQuestion {
-    @EmbeddedId
-    private BucketQuestionId id;
-    @MapsId("questionBucketId")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
+    private Long questionId;
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "question_bucket_id")
     private QuestionBucket questionBucket;
 }

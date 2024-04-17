@@ -1,6 +1,7 @@
 package az.edu.ada.mstest.controller;
 
 import az.edu.ada.mstest.model.entities.GeneratedTest;
+import az.edu.ada.mstest.model.request.GeneratedTestRequest;
 import az.edu.ada.mstest.service.GeneratedTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ public class GeneratedTestController {
     }
 
     @PostMapping
-    public ResponseEntity<GeneratedTest> createGeneratedTest(@RequestBody GeneratedTest generatedTest) {
-        GeneratedTest savedGeneratedTest = generatedTestService.saveGeneratedTest(generatedTest);
+    public ResponseEntity<GeneratedTest> createGeneratedTest(@RequestBody GeneratedTestRequest generatedTestRequest) {
+        GeneratedTest savedGeneratedTest = generatedTestService.saveGeneratedTest(generatedTestRequest);
         return new ResponseEntity<>(savedGeneratedTest, HttpStatus.CREATED);
     }
 
