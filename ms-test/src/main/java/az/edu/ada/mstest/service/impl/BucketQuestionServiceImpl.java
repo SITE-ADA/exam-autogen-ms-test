@@ -1,7 +1,6 @@
 package az.edu.ada.mstest.service.impl;
 
 import az.edu.ada.mstest.model.entities.BucketQuestion;
-import az.edu.ada.mstest.model.request.BucketQuestionRequest;
 import az.edu.ada.mstest.repository.BucketQuestionRepository;
 import az.edu.ada.mstest.repository.QuestionBucketRepository;
 import az.edu.ada.mstest.service.BucketQuestionService;

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,4 +21,8 @@ public class GeneratedTestRequest {
     private Long nbVariants;
     @NotNull
     private Long nbExaminees;
+    @NotNull
+    private String name;
+    @NotNull
+    private String date;
 }

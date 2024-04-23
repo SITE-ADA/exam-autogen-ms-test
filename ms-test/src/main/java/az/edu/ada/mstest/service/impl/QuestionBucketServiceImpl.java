@@ -1,7 +1,10 @@
 package az.edu.ada.mstest.service.impl;
 
+import az.edu.ada.mstest.client.QuestionClient;
+import az.edu.ada.mstest.model.entities.BucketQuestion;
 import az.edu.ada.mstest.model.entities.QuestionBucket;
 import az.edu.ada.mstest.model.request.QuestionBucketRequest;
+import az.edu.ada.mstest.repository.BucketQuestionRepository;
 import az.edu.ada.mstest.repository.QuestionBucketRepository;
 import az.edu.ada.mstest.repository.TestRepository;
 import az.edu.ada.mstest.service.QuestionBucketService;
@@ -10,16 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class QuestionBucketServiceImpl implements QuestionBucketService {
     private final QuestionBucketRepository questionBucketRepository;
+    private final BucketQuestionRepository bucketQuestionRepository;
+    private final QuestionClient questionClient;
     private final TestRepository testRepository;
 
     @Autowired
-    public QuestionBucketServiceImpl(QuestionBucketRepository questionBucketRepository, TestRepository testRepository) {
+    public QuestionBucketServiceImpl(QuestionBucketRepository questionBucketRepository, BucketQuestionRepository bucketQuestionRepository,
+                                     TestRepository testRepository, QuestionClient questionClient) {
         this.questionBucketRepository = questionBucketRepository;
+        this.bucketQuestionRepository = bucketQuestionRepository;
         this.testRepository = testRepository;
+        this.questionClient = questionClient;
     }
 
     @Override
@@ -35,15 +44,32 @@ public class QuestionBucketServiceImpl implements QuestionBucketService {
 
     @Override
     public QuestionBucket saveQuestionBucket(QuestionBucketRequest questionBucketRequest) {
+
         var questionBucket = QuestionBucket.builder()
                 .test(testRepository.findById(questionBucketRequest.getTestId()).get())
                 .order(questionBucketRequest.getOrder())
-                .noTotalQuestions(questionBucketRequest.getNoTotalQuestions())
+                .noTotalQuestions(questionBucketRequest.getQuestionIds().size())
                 .nbSelectedQuestions(questionBucketRequest.getNbSelectedQuestions())
-                .maximumPoints(questionBucketRequest.getMaximumPoints())
                 .build();
 
-        return questionBucketRepository.save(questionBucket);
+        questionBucket = questionBucketRepository.save(questionBucket);
+
+        QuestionBucket finalQuestionBucket = questionBucket;
+        AtomicReference<Double> maxPoints = new AtomicReference<>(0.0);
+        questionBucketRequest.getQuestionIds().forEach(questionId -> {
+            BucketQuestion bucketQuestion = BucketQuestion.builder()
+                    .questionId(questionId)
+                    .questionBucket(finalQuestionBucket)
+                    .build();
+            bucketQuestionRepository.save(bucketQuestion);
+            System.out.println(questionId);
+            maxPoints.updateAndGet(v -> v + questionClient.getQuestionById(questionId).getDefaultScore());
+        });
+
+        questionBucket.setMaximumPoints(maxPoints.get());
+        questionBucketRepository.save(questionBucket);
+
+        return questionBucket;
     }
 
     @Override

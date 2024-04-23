@@ -1,7 +1,6 @@
 package az.edu.ada.mstest.controller;
 
 import az.edu.ada.mstest.model.entities.BucketQuestion;
-import az.edu.ada.mstest.model.request.BucketQuestionRequest;
 import az.edu.ada.mstest.service.BucketQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

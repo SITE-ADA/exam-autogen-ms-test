@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,14 +20,12 @@ public class QuestionBucket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "test_id")
     private Test test;
-
-    @Column(name = "question_order")
+    @Column(name = "qbucket_order")
     private Integer order;
     private Integer noTotalQuestions;
     private Integer nbSelectedQuestions;
-    private Integer maximumPoints;
+    private Double maximumPoints;
 }

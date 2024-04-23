@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,5 @@ public class Test {
     private String notes;
     private String instructions;
     private Integer maximumPoints;
-    @Column(unique=true)
     private Long subjectId;
 }

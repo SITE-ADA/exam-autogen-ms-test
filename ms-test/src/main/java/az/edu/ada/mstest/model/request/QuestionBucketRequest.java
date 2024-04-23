@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,9 +20,7 @@ public class QuestionBucketRequest {
     @NotNull
     private Integer order;
     @NotNull
-    private Integer noTotalQuestions;
-    @NotNull
     private Integer nbSelectedQuestions;
     @NotNull
-    private Integer maximumPoints;
+    private List<Long> questionIds;
 }

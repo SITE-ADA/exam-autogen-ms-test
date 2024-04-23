@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 @Data
 @NoArgsConstructor
@@ -18,5 +19,6 @@ public class QuestionDTO {
     private Long questionTypeId;
     private Long questionPoolId;
     private Set<Long> tagsIds;
+    private List<AnswerDTO> answers;
+    private CorrectAnswerDTO correctAnswer;
 }
-

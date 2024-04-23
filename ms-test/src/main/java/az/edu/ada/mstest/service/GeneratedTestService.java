@@ -1,7 +1,7 @@
 package az.edu.ada.mstest.service;
 
 import az.edu.ada.mstest.model.entities.GeneratedTest;
-import az.edu.ada.mstest.model.entities.Test;
+import az.edu.ada.mstest.model.entities.QuestionBooklet;
 import az.edu.ada.mstest.model.request.GeneratedTestRequest;
 
 import java.util.List;

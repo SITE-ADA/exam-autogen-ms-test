@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +20,10 @@ public class QuestionBooklet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gentest_id")
+    private GeneratedTest generatedTest;
+    private String variantName;
     @Lob
     @Column(columnDefinition = "TEXT")
     private String questionsJson;
