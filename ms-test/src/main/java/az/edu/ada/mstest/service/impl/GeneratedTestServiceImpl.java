@@ -6,18 +6,14 @@ import az.edu.ada.mstest.model.entities.*;
 import az.edu.ada.mstest.model.request.GeneratedTestRequest;
 import az.edu.ada.mstest.repository.*;
 import az.edu.ada.mstest.service.GeneratedTestService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -96,7 +92,10 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
 
                 Collections.shuffle(questions);
 
-                List<QuestionDTO> selectedQuestions = questions.stream().limit(selectQuestionsNum).toList();
+                List<QuestionDTO> selectedQuestions = new ArrayList<>();
+                for(int i = 0; i < selectQuestionsNum; i++) {
+                    selectedQuestions.add(questions.get(i));
+                }
                 bookletQuestions.addAll(selectedQuestions);
             }
 
@@ -106,7 +105,7 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
             questionBookletRepository.save(questionBooklet);
         }
 
-        return generatedTestRepository.save(generatedTest);
+        return generatedTest;
     }
 
     @Override

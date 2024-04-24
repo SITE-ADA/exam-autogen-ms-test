@@ -2,10 +2,11 @@ package az.edu.ada.mstest.service;
 
 import az.edu.ada.mstest.model.entities.QuestionBooklet;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface QuestionBookletService {
-    QuestionBooklet saveQuestionBooklet(QuestionBooklet questionBooklet);
+    void generateBookletDocs(List<Long> bookletIds) throws IOException;
     QuestionBooklet findById(Long id);
     List<QuestionBooklet> findAll();
     void deleteById(Long id);
