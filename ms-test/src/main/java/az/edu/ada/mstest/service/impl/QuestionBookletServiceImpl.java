@@ -39,8 +39,6 @@ public class QuestionBookletServiceImpl implements QuestionBookletService {
     public void generateBookletDocs(List<Long> bookletIds) throws IOException {
         List<QuestionBooklet> questionBooklets = repository.findAllById(bookletIds);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Format for displaying the date
-
         for (QuestionBooklet booklet : questionBooklets) {
             XWPFDocument document = new XWPFDocument();
 
@@ -87,6 +85,7 @@ public class QuestionBookletServiceImpl implements QuestionBookletService {
                     option++;
                 }
                 questionRun.addBreak(); // Adds space between questions
+                questionInc++;
             }
 
             // Write to a byte array output stream

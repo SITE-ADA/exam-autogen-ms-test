@@ -12,7 +12,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -62,7 +65,6 @@ public class QuestionBucketServiceImpl implements QuestionBucketService {
                     .questionBucket(finalQuestionBucket)
                     .build();
             bucketQuestionRepository.save(bucketQuestion);
-            System.out.println(questionId);
             maxPoints.updateAndGet(v -> v + questionClient.getQuestionById(questionId).getDefaultScore());
         });
 
@@ -70,6 +72,61 @@ public class QuestionBucketServiceImpl implements QuestionBucketService {
         questionBucketRepository.save(questionBucket);
 
         return questionBucket;
+    }
+
+    @Override
+    public QuestionBucket patchQuestionBucket(Long id, Map<String, Object> updates) {
+        Optional<QuestionBucket> optionalQuestionBucket = questionBucketRepository.findById(id);
+        if (!optionalQuestionBucket.isPresent()) {
+            return null;
+        }
+
+        QuestionBucket questionBucket = optionalQuestionBucket.get();
+        applyPatchToQuestionBucket(questionBucket, updates);
+        questionBucketRepository.save(questionBucket);
+        return questionBucket;
+    }
+
+    private void applyPatchToQuestionBucket(QuestionBucket questionBucket, Map<String, Object> updates) {
+        updates.forEach((key, value) -> {
+            try {
+                Field field = questionBucket.getClass().getDeclaredField(key);
+                field.setAccessible(true);
+                if (key.equals("questionIds")) {
+                    List<Long> existingQuestionIds = (List<Long>) field.get(questionBucket);
+                    existingQuestionIds.addAll((List<Long>) value);
+                    addBucketQuestions(questionBucket, (List<Long>) value);
+                    updateMaximumPoints(questionBucket, existingQuestionIds);
+                } else {
+                    field.set(questionBucket, value);
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                handleException(e);
+            }
+        });
+    }
+
+    private void addBucketQuestions(QuestionBucket questionBucket, List<Long> newQuestionIds) {
+        newQuestionIds.forEach(questionId -> {
+            BucketQuestion bucketQuestion = BucketQuestion.builder()
+                    .questionId(questionId)
+                    .questionBucket(questionBucket)
+                    .build();
+            bucketQuestionRepository.save(bucketQuestion);
+        });
+    }
+
+    private void updateMaximumPoints(QuestionBucket questionBucket, List<Long> questionIds) {
+        System.out.println(questionIds);
+        AtomicReference<Double> maxPoints = new AtomicReference<>(0.0);
+        questionIds.forEach(questionId -> {
+            maxPoints.updateAndGet(v -> v + questionClient.getQuestionById(questionId).getDefaultScore());
+        });
+        questionBucket.setMaximumPoints(maxPoints.get());
+    }
+
+    private void handleException(Exception e) {
+        // Handle the exception, possibly logging a warning or throwing a custom exception
     }
 
     @Override

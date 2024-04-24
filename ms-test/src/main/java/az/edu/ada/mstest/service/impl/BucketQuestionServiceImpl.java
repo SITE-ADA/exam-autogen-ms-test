@@ -13,13 +13,10 @@ import java.util.List;
 public class BucketQuestionServiceImpl implements BucketQuestionService {
 
     private final BucketQuestionRepository bucketQuestionRepository;
-    private final QuestionBucketRepository questionBucketRepository;
 
     @Autowired
-    public BucketQuestionServiceImpl(BucketQuestionRepository bucketQuestionRepository,
-                                     QuestionBucketRepository questionBucketRepository) {
+    public BucketQuestionServiceImpl(BucketQuestionRepository bucketQuestionRepository) {
         this.bucketQuestionRepository = bucketQuestionRepository;
-        this.questionBucketRepository = questionBucketRepository;
     }
 
     @Override

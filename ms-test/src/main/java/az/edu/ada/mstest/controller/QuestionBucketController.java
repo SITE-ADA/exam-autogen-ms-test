@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/tests/question-buckets")
@@ -31,6 +32,16 @@ public class QuestionBucketController {
     public ResponseEntity<QuestionBucket> getQuestionBucketById(@PathVariable Long id) {
         QuestionBucket questionBucket = questionBucketService.findQuestionBucketById(id);
         return ResponseEntity.ok(questionBucket);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<QuestionBucket> patchQuestionBucket(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        QuestionBucket patchedQuestionBucket = questionBucketService.patchQuestionBucket(id, updates);
+        if (patchedQuestionBucket != null) {
+            return ResponseEntity.ok(patchedQuestionBucket);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping

@@ -75,26 +75,31 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
         });
 
         List<QuestionBucket> questionBuckets = questionBucketRepository.findByTestId(generatedTest.getTest().getId());
-        List<BucketQuestion> bucketQuestions = new ArrayList<>();
+        List<List<BucketQuestion>> bucketQuestions = new ArrayList<>();
         for(QuestionBucket questionBucket : questionBuckets) {
-            bucketQuestions = bucketQuestionRepository.findAllByQuestionBucketId(questionBucket.getId());
+            bucketQuestions.add(bucketQuestionRepository.findAllByQuestionBucketId(questionBucket.getId()));
         }
 
-        List<QuestionDTO> questions = new ArrayList<>();
-        for(BucketQuestion bucketQuestion : bucketQuestions) {
-            questions.add(questionClient.getQuestionById(bucketQuestion.getQuestionId()));
+        List<List<QuestionDTO>> questions = new ArrayList<>();
+        for(List<BucketQuestion> bucketQuestionsList : bucketQuestions) {
+            List<QuestionDTO> questionsList = new ArrayList<>();
+            for(BucketQuestion bucketQuestion : bucketQuestionsList) {
+                questionsList.add(questionClient.getQuestionById(bucketQuestion.getQuestionId()));
+            }
+            questions.add(questionsList);
         }
 
         for(QuestionBooklet questionBooklet : questionBooklets) {
             List<QuestionDTO> bookletQuestions = new ArrayList<>();
-            for(QuestionBucket questionBucket : questionBuckets) {
-                Integer selectQuestionsNum = questionBucket.getNbSelectedQuestions();
+            for(int i = 0; i < questionBuckets.size(); i++) {
+                Integer selectQuestionsNum = questionBuckets.get(i).getNbSelectedQuestions();
 
-                Collections.shuffle(questions);
+                List<QuestionDTO> shuffledQuestions = questions.get(i);
+                Collections.shuffle(shuffledQuestions);
 
                 List<QuestionDTO> selectedQuestions = new ArrayList<>();
-                for(int i = 0; i < selectQuestionsNum; i++) {
-                    selectedQuestions.add(questions.get(i));
+                for(int j = 0; j < selectQuestionsNum; j++) {
+                    selectedQuestions.add(shuffledQuestions.get(j));
                 }
                 bookletQuestions.addAll(selectedQuestions);
             }
