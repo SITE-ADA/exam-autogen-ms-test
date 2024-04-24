@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface BucketQuestionService {
     List<BucketQuestion> findAll();
-    BucketQuestion save(BucketQuestionRequest bucketQuestionRequest);
     void delete(Long id);
 }

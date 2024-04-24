@@ -25,12 +25,6 @@ public class BucketQuestionController {
         return ResponseEntity.ok(bucketQuestions);
     }
 
-    @PostMapping
-    public ResponseEntity<BucketQuestion> save(@RequestBody BucketQuestionRequest bucketQuestionRequest) {
-        BucketQuestion savedBucketQuestion = bucketQuestionService.save(bucketQuestionRequest);
-        return ResponseEntity.ok(savedBucketQuestion);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBucket(@PathVariable Long id) {
         bucketQuestionService.delete(id);

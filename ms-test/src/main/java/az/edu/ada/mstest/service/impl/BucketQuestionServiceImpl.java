@@ -28,16 +28,6 @@ public class BucketQuestionServiceImpl implements BucketQuestionService {
     }
 
     @Override
-    public BucketQuestion save(BucketQuestionRequest bucketQuestionRequest) {
-        var bucketQuestion = BucketQuestion.builder()
-                .questionId(bucketQuestionRequest.getQuestionId())
-                .questionBucket(questionBucketRepository.findById(bucketQuestionRequest.getQuestionBucketId()).get())
-                .build();
-
-        return bucketQuestionRepository.save(bucketQuestion);
-    }
-
-    @Override
     public void delete(Long id) {
         bucketQuestionRepository.deleteById(id);
     }
