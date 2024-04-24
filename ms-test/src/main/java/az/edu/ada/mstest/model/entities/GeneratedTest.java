@@ -1,5 +1,6 @@
 package az.edu.ada.mstest.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Valid
 @Builder
 @Table(name = "generated_test")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GeneratedTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
