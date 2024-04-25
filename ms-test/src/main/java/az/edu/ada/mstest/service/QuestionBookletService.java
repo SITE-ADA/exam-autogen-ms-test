@@ -1,5 +1,6 @@
 package az.edu.ada.mstest.service;
 
+import az.edu.ada.mstest.model.dto.CorrectAnswerAssessDTO;
 import az.edu.ada.mstest.model.entities.QuestionBooklet;
 
 import java.io.IOException;
@@ -10,4 +11,5 @@ public interface QuestionBookletService {
     QuestionBooklet findById(Long id);
     List<QuestionBooklet> findAll();
     void deleteById(Long id);
+    List<CorrectAnswerAssessDTO> findCorrectAnswersByBookletId(Long id);
 }

@@ -89,7 +89,9 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
             questions.add(questionsList);
         }
 
+
         for(QuestionBooklet questionBooklet : questionBooklets) {
+            var testMaxPoints = 0;
             List<QuestionDTO> bookletQuestions = new ArrayList<>();
             for(int i = 0; i < questionBuckets.size(); i++) {
                 Integer selectQuestionsNum = questionBuckets.get(i).getNbSelectedQuestions();
@@ -100,6 +102,7 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
                 List<QuestionDTO> selectedQuestions = new ArrayList<>();
                 for(int j = 0; j < selectQuestionsNum; j++) {
                     selectedQuestions.add(shuffledQuestions.get(j));
+                    testMaxPoints += shuffledQuestions.get(j).getDefaultScore();
                 }
                 bookletQuestions.addAll(selectedQuestions);
             }
@@ -107,6 +110,7 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
             Gson gson = new Gson();
             String jsonString = gson.toJson(bookletQuestions);
             questionBooklet.setQuestionsJson(jsonString);
+            questionBooklet.getGeneratedTest().getTest().setMaximumPoints(testMaxPoints);
             questionBookletRepository.save(questionBooklet);
         }
 

@@ -1,5 +1,6 @@
 package az.edu.ada.mstest.controller;
 
+import az.edu.ada.mstest.model.dto.CorrectAnswerAssessDTO;
 import az.edu.ada.mstest.model.entities.QuestionBooklet;
 import az.edu.ada.mstest.service.QuestionBookletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class QuestionBookletController {
     @Autowired
     public QuestionBookletController(QuestionBookletService service) {
         this.service = service;
+    }
+
+    @GetMapping("/getInfoForAssessment/{id}")
+    public ResponseEntity<List<CorrectAnswerAssessDTO>> getCorrectAnswers(@PathVariable Long id) {
+        List<CorrectAnswerAssessDTO> correctAnswers = service.findCorrectAnswersByBookletId(id);
+        return ResponseEntity.ok(correctAnswers);
     }
 
     @PostMapping("/create-docs")
