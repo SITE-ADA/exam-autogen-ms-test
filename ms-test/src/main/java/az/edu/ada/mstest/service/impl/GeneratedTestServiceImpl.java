@@ -74,11 +74,13 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
             questionBooklets.add(questionBookletRepository.save(booklet));
         });
 
+
         List<QuestionBucket> questionBuckets = questionBucketRepository.findByTestId(generatedTest.getTest().getId());
         List<List<BucketQuestion>> bucketQuestions = new ArrayList<>();
         for(QuestionBucket questionBucket : questionBuckets) {
             bucketQuestions.add(bucketQuestionRepository.findAllByQuestionBucketId(questionBucket.getId()));
         }
+
 
         List<List<QuestionDTO>> questions = new ArrayList<>();
         for(List<BucketQuestion> bucketQuestionsList : bucketQuestions) {
@@ -88,7 +90,9 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
             }
             questions.add(questionsList);
         }
-
+        for (List<QuestionDTO> question: questions){
+            System.out.println("question.size: " + question.size());
+        }
 
         for(QuestionBooklet questionBooklet : questionBooklets) {
             var testMaxPoints = 0;
@@ -96,8 +100,12 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
             for(int i = 0; i < questionBuckets.size(); i++) {
                 Integer selectQuestionsNum = questionBuckets.get(i).getNbSelectedQuestions();
 
+//                System.out.println("selectQuestionsNum: " + selectQuestionsNum);
+
                 List<QuestionDTO> shuffledQuestions = questions.get(i);
                 Collections.shuffle(shuffledQuestions);
+
+//                System.out.println("shuffledQuestions: " + shuffledQuestions);
 
                 List<QuestionDTO> selectedQuestions = new ArrayList<>();
                 for(int j = 0; j < selectQuestionsNum; j++) {
@@ -107,12 +115,15 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
                 bookletQuestions.addAll(selectedQuestions);
             }
 
+            System.out.println("bookletQuestions: " + bookletQuestions);
+
             Gson gson = new Gson();
             String jsonString = gson.toJson(bookletQuestions);
             questionBooklet.setQuestionsJson(jsonString);
             questionBooklet.getGeneratedTest().getTest().setMaximumPoints(testMaxPoints);
             questionBookletRepository.save(questionBooklet);
         }
+
 
         return generatedTest;
     }

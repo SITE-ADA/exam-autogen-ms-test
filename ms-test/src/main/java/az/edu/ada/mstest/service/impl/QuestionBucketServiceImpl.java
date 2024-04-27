@@ -35,6 +35,11 @@ public class QuestionBucketServiceImpl implements QuestionBucketService {
     }
 
     @Override
+    public List<QuestionBucket> findAllQuestionBuckets() {
+        return questionBucketRepository.findAll();
+    }
+
+    @Override
     public List<QuestionBucket> findByQuestionBucketId(Long testId) {
         return questionBucketRepository.findByTestId(testId);
     }

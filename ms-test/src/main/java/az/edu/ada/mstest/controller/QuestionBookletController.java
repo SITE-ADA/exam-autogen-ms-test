@@ -29,7 +29,7 @@ import java.util.zip.ZipOutputStream;
 public class QuestionBookletController {
 
     private final QuestionBookletService service;
-    private final static String DOCUMENTS_DIR = "D:/Tests/";
+    private final static String DOCUMENTS_DIR = "/app/Tests";
 
     @Autowired
     public QuestionBookletController(QuestionBookletService service) {

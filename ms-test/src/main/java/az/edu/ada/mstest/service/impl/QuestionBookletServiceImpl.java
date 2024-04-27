@@ -126,7 +126,7 @@ public class QuestionBookletServiceImpl implements QuestionBookletService {
             document.close();
 
             // Save the file
-            Path path = Paths.get("D:/Tests/", "TestBooklet_" + booklet.getId() + ".docx");
+            Path path = Paths.get("/app/Tests", "TestBooklet_" + booklet.getId() + ".docx");
             Files.write(path, outputStream.toByteArray());
         }
     }

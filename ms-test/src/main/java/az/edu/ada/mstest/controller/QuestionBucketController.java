@@ -22,6 +22,12 @@ public class QuestionBucketController {
         this.questionBucketService = questionBucketService;
     }
 
+    @GetMapping("")
+    public ResponseEntity<List<QuestionBucket>> getAllQuestionBuckets(){
+        List<QuestionBucket> questionBuckets = questionBucketService.findAllQuestionBuckets();
+        return ResponseEntity.ok(questionBuckets);
+    }
+
     @GetMapping("/test/{testId}")
     public ResponseEntity<List<QuestionBucket>> getQuestionBucketsByTestId(@PathVariable Long testId) {
         List<QuestionBucket> questionBuckets = questionBucketService.findByQuestionBucketId(testId);
