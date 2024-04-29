@@ -1,6 +1,6 @@
 package az.edu.ada.mstest.service.impl;
 
-import az.edu.ada.mstest.client.QuestionClient;
+import az.edu.ada.mstest.client.MsQuestionClient;
 import az.edu.ada.mstest.model.entities.BucketQuestion;
 import az.edu.ada.mstest.model.entities.QuestionBucket;
 import az.edu.ada.mstest.model.request.QuestionBucketRequest;
@@ -22,12 +22,12 @@ import java.util.concurrent.atomic.AtomicReference;
 public class QuestionBucketServiceImpl implements QuestionBucketService {
     private final QuestionBucketRepository questionBucketRepository;
     private final BucketQuestionRepository bucketQuestionRepository;
-    private final QuestionClient questionClient;
+    private final MsQuestionClient questionClient;
     private final TestRepository testRepository;
 
     @Autowired
     public QuestionBucketServiceImpl(QuestionBucketRepository questionBucketRepository, BucketQuestionRepository bucketQuestionRepository,
-                                     TestRepository testRepository, QuestionClient questionClient) {
+                                     TestRepository testRepository, MsQuestionClient questionClient) {
         this.questionBucketRepository = questionBucketRepository;
         this.bucketQuestionRepository = bucketQuestionRepository;
         this.testRepository = testRepository;

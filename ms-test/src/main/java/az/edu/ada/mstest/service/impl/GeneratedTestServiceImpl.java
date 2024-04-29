@@ -1,6 +1,6 @@
 package az.edu.ada.mstest.service.impl;
 
-import az.edu.ada.mstest.client.QuestionClient;
+import az.edu.ada.mstest.client.MsQuestionClient;
 import az.edu.ada.mstest.model.dto.QuestionDTO;
 import az.edu.ada.mstest.model.entities.*;
 import az.edu.ada.mstest.model.request.GeneratedTestRequest;
@@ -22,7 +22,7 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
     private final QuestionBookletRepository questionBookletRepository;
     private final QuestionBucketRepository questionBucketRepository;
     private final BucketQuestionRepository bucketQuestionRepository;
-    private final QuestionClient questionClient;
+    private final MsQuestionClient questionClient;
     private final TestRepository testRepository;
 
     @Autowired
@@ -30,7 +30,7 @@ public class GeneratedTestServiceImpl implements GeneratedTestService {
                                     QuestionBookletRepository questionBookletRepository,
                                     QuestionBucketRepository questionBucketRepository,
                                     BucketQuestionRepository bucketQuestionRepository,
-                                    QuestionClient questionClient, TestRepository testRepository) {
+                                    MsQuestionClient questionClient, TestRepository testRepository) {
         this.generatedTestRepository = generatedTestRepository;
         this.questionBookletRepository = questionBookletRepository;
         this.questionBucketRepository = questionBucketRepository;

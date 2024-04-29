@@ -1,5 +1,6 @@
 package az.edu.ada.mstest.controller;
 
+import az.edu.ada.mstest.model.dto.TestDTO;
 import az.edu.ada.mstest.model.entities.Test;
 import az.edu.ada.mstest.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,15 @@ public class TestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Test>> getAllTests() {
-        List<Test> tests = testService.findAllTests();
+    public ResponseEntity<List<TestDTO>> getAllTests() {
+        List<TestDTO> tests = testService.findAll();
         return ResponseEntity.ok(tests);
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Test> getTestById(@PathVariable Long id) {
-        Test test = testService.findTestById(id);
+    public ResponseEntity<TestDTO> getTestById(@PathVariable Long id) {
+        TestDTO test = testService.findTestById(id);
         return ResponseEntity.ok(test);
     }
 

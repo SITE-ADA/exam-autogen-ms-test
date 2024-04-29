@@ -61,4 +61,5 @@ public class QuestionBucketController {
         questionBucketService.deleteQuestionBucket(id);
         return ResponseEntity.ok().build();
     }
+
 }

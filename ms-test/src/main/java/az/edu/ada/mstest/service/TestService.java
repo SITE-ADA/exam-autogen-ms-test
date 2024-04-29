@@ -1,12 +1,14 @@
 package az.edu.ada.mstest.service;
 
+import az.edu.ada.mstest.model.dto.TestDTO;
 import az.edu.ada.mstest.model.entities.Test;
 
 import java.util.List;
 
 public interface TestService {
     List<Test> findAllTests();
-    Test findTestById(Long id);
+    TestDTO findTestById(Long id);
+    List<TestDTO> findAll();
     Test saveTest(Test test);
     void deleteTest(Long id);
 }
