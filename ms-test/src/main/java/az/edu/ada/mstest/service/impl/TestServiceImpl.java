@@ -54,8 +54,8 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public TestDTO findTestById(Long id) {
-        SubjectDTO subjectDTO = subjectClient.getSubjectById(id);
         Test test = testRepository.findById(id).get();
+        SubjectDTO subjectDTO = subjectClient.getSubjectById(test.getSubjectId());
 
         return TestDTO.builder()
                 .name(test.getName())
