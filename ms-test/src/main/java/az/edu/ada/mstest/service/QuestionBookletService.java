@@ -11,5 +11,8 @@ public interface QuestionBookletService {
     QuestionBooklet findById(Long id);
     List<QuestionBooklet> findAll();
     void deleteById(Long id);
+
+    List<QuestionBooklet> getQuestionBookletsByGeneratedTestId(Long testId);
+
     List<CorrectAnswerAssessDTO> findCorrectAnswersByBookletId(Long id);
 }

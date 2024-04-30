@@ -1,11 +1,8 @@
 package az.edu.ada.mstest.service.impl;
 import az.edu.ada.mstest.model.dto.AnswerDTO;
 import az.edu.ada.mstest.model.dto.CorrectAnswerAssessDTO;
-import az.edu.ada.mstest.model.dto.CorrectAnswerDTO;
 import az.edu.ada.mstest.model.dto.QuestionDTO;
 import az.edu.ada.mstest.model.entities.QuestionBooklet;
-import az.edu.ada.mstest.model.entities.QuestionBucket;
-import az.edu.ada.mstest.model.entities.Test;
 import az.edu.ada.mstest.repository.*;
 import az.edu.ada.mstest.service.QuestionBookletService;
 import com.google.gson.Gson;
@@ -26,9 +23,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class QuestionBookletServiceImpl implements QuestionBookletService {
@@ -38,6 +33,11 @@ public class QuestionBookletServiceImpl implements QuestionBookletService {
     @Autowired
     public QuestionBookletServiceImpl(QuestionBookletRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public List<QuestionBooklet> getQuestionBookletsByGeneratedTestId(Long testId) {
+        return repository.getQuestionBookletsByGeneratedTestId(testId);
     }
 
     @Override

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface QuestionBookletRepository extends JpaRepository<QuestionBooklet, Long> {
     List<QuestionBooklet> findAllByIdIn(List<Long> bookletIds);
+    List<QuestionBooklet> getQuestionBookletsByGeneratedTestId(Long testId);
 }

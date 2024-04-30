@@ -3,6 +3,7 @@ package az.edu.ada.mstest.controller;
 import az.edu.ada.mstest.model.dto.CorrectAnswerAssessDTO;
 import az.edu.ada.mstest.model.entities.QuestionBooklet;
 import az.edu.ada.mstest.service.QuestionBookletService;
+import jakarta.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -98,6 +99,11 @@ public class QuestionBookletController {
         return ResponseEntity.ok(booklet);
     }
 
+    @GetMapping("/getByGeneratedTestId/{testId}")
+    public ResponseEntity<List<QuestionBooklet>> getQuestionBookletsByGeneratedTestId(@PathVariable Long testId) {
+        var questionBooklets = service.getQuestionBookletsByGeneratedTestId(testId);
+        return ResponseEntity.ok(questionBooklets);
+    }
     @GetMapping
     public ResponseEntity<List<QuestionBooklet>> getAllQuestionBooklets() {
         List<QuestionBooklet> booklets = service.findAll();
