@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TestDTO {
+    private Long id;
     private String name;
     private String notes;
     private String instructions;

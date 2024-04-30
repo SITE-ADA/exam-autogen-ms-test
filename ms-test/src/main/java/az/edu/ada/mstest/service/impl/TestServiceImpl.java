@@ -38,6 +38,7 @@ public class TestServiceImpl implements TestService {
         for(Test test: tests){
             SubjectDTO subjectDTO = subjectClient.getSubjectById(test.getSubjectId());
             var testDTO = TestDTO.builder()
+                    .id(test.getId())
                     .name(test.getName())
                     .notes(test.getNotes())
                     .instructions(test.getInstructions())
