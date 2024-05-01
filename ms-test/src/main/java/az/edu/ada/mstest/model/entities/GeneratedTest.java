@@ -22,9 +22,11 @@ public class GeneratedTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
     private Test test;
+
     @Column(unique = true)
     private String name;
     private Long nbVariants;

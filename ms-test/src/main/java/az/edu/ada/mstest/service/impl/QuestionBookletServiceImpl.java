@@ -7,14 +7,17 @@ import az.edu.ada.mstest.repository.*;
 import az.edu.ada.mstest.service.QuestionBookletService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -23,6 +26,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -68,7 +72,9 @@ public class QuestionBookletServiceImpl implements QuestionBookletService {
     }
 
     @Override
+    @Transactional
     public void generateBookletDocs(List<Long> bookletIds) throws IOException {
+        FileUtils.cleanDirectory(new File("/app/Tests"));
         List<QuestionBooklet> questionBooklets = repository.findAllById(bookletIds);
 
         for (QuestionBooklet booklet : questionBooklets) {
@@ -130,6 +136,8 @@ public class QuestionBookletServiceImpl implements QuestionBookletService {
             Files.write(path, outputStream.toByteArray());
         }
     }
+
+
 
     private List<QuestionDTO> parseQuestionsJson(String json) {
         Gson gson = new Gson();

@@ -23,9 +23,9 @@ public class QuestionBooklet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // Add cascade type here
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "gentest_id")
-    @OnDelete(action = OnDeleteAction.CASCADE) // Hibernate-specific, ensures cascade delete in DDL
+    @OnDelete(action = OnDeleteAction.CASCADE) // Ensures cascade delete is mirrored in DDL
     private GeneratedTest generatedTest;
 
     private String variantName;
